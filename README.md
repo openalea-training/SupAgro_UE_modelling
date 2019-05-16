@@ -30,32 +30,3 @@ Install the different packages
     conda install notebook=5.4 matplotlib pandas nbformat git
 
     conda install -c openalea -c conda-forge pvlib-python alinea.astk
-
-
-## Installation of R & co
-
-You can install everything by yourself, or using the r channel in conda.
-
-With **conda**:
-
-### Install RStudio, Rmarkdown
-
-
-    [source] deactivate
-    conda create -n renv -c r rstudio r-rmarkdown r-car r-lme4
-    
-    [source] activate renv
-    
-
-### Install R packages
-* PerformanceAnalytics
-* lme4
-* car
-* agricolae
-* sensitivity
-* lhs
-* planor
-
-Under **R**, you can install everything using:
-    
-    install.packages(c('PerformanceAnalytics','agricolae','sensitivity','lhs','planor') )
