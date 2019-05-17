@@ -1,0 +1,45 @@
+Axiom: A
+
+derivation length: 2
+production:
+A: 
+  produce /I[L]A
+
+interpretation:
+#maximum depth: 10
+I --> F
+
+L --> &(90)f(0.1)&(-90)&_(0.25)@b(1)&@b(1)&@b(1,0)
+A --> ;(3)f(0.1)@O
+
+
+
+endlsystem
+###### INITIALISATION ######
+
+__lpy_code_version__ = 1.1
+
+def __initialiseContext__(context):
+	import openalea.plantgl.all as pgl
+	midrib = pgl.BezierCurve2D(	
+	    pgl.Point3Array([(0.00649351, 0.012987, 1),(0.0584416, 0.238095, 1),(0.945887, 0.800866, 1),(0.993506, 0.00865801, 1)]) , 
+	    )
+	midrib.name = "midrib"
+	section = pgl.BezierCurve2D(	
+	    pgl.Point3Array([(-0.5, 0, 1),(-0.218615, -0.116883, 1),(0.244589, -0.121212, 1),(0.5, 0, 1)]) , 
+	    )
+	section.name = "section"
+	import openalea.plantgl.all as pgl
+	width = pgl.NurbsCurve2D(	
+	    ctrlPointList = pgl.Point3Array([(0, 0, 1),(0.320346, 0.30303, 1),(0.709957, 0.0562771, 1),(1, 0, 1)]) , 
+	    )
+	width.name = "width"
+	panel_0 = ({'active': True, 'visible': False, 'name': 'Panel 1'},[('Curve2D',midrib),('Curve2D',section),('Function',width)])
+	panel_1 = ({'active': True, 'visible': False, 'name': 'Panel 2'},[])
+	parameterset = [panel_0,panel_1,]
+	context["__functions__"] = [('width',width),]
+	context["__curves__"] = [('midrib',midrib),('section',section),]
+	context["__parameterset__"] = parameterset
+	context["midrib"] = midrib
+	context["section"] = section
+	context["width"] = pgl.QuantisedFunction(width)
