@@ -34,8 +34,24 @@ def show_illumination(lstring, lscene, light=None, pattern=None):
   cs.plot(raw['Ei'], minval=0, maxval=1)
   
   
-def generate_plant(lsystem='simple_maize_nolight.lpy'):
-    lsys = Lsystem(lsystem)
+def generate_plant(lsystem='simple_maize_nolight.lpy', parameters=None):
+    """ Run a lpy model from python with parameters 
+    
+    parameters : a {'parameter_name': value, ...} dict with parameters
+    Note: 
+    the following lines should be included in lpy file, after the definition of the model parameters
+
+    try:
+      parameters = parameters
+    except NameError:
+      parameters = {}
+    for p_name in parameters:
+      globals()[p_name] = parameters[p_name]
+    """
+    if parameters:
+        lsys = Lsystem(lsystem, {'parameters':parameters})
+    else:
+        lsys = Lsystem(lsystem)
     lstring = lsys.iterate()
     lscene = lsys.sceneInterpretation(lstring)
     return lstring, lscene
