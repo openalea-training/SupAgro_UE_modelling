@@ -1,5 +1,5 @@
 
-diam=0.25
+leaf_width=0.25
 
 try:
   parameters = parameters
@@ -14,13 +14,13 @@ Axiom: A
 derivation length: 2
 production:
 A: 
-  produce /I[L]A(diam)
+  produce /I[L]A
 
 interpretation:
 #maximum depth: 10
 I --> F
 
-L --> &(90)f(0.1)&(-90)&_(diam)@b(1)&@b(1)&@b(1,0)
+L --> &(90)f(0.1)&(-90)&_(leaf_width / 2.)@b(1)&@b(1)&@b(1,0)
 A --> ;(3)f(0.1)@O
 
 
