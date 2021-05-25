@@ -18,7 +18,7 @@ If you have not yet installed conda on your computer, follow these instructions:
 Create an environment named *openalea*:
 Launch a console (See Anaconda Prompt in Start menu on windows)
     
-    conda create -n training -c fredboudon -c conda-forge openalea.plantgl openalea.lpy alinea.caribu alinea.astek python=3.8 
+    conda create -n training -c fredboudon -c conda-forge openalea.plantgl openalea.lpy alinea.caribu alinea.astk python=3.8 
 
 Activate the *openalea* environment:
 
