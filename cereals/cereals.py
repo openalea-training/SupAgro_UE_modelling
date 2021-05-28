@@ -34,4 +34,8 @@ def build_shoot(stem_radius, insertion_heights, leaf_lengths, leaf_areas, leaf_a
     df['leaf_azimuth'] = leaf_azimuths
     df['leaf_rank'] = ranks
     df['leaf_shape'] = [leaf_shapes[n - 1] for n in df.leaf_rank]
-    return cereals_generator(plant=df)
+    return df, cereals_generator(plant=df)
+    
+def shoot_at_stage(shoot, stage):
+    df = shoot.loc[shoot['leaf_rank'] <= stage,:]
+    return df, cereals_generator(plant=df)
