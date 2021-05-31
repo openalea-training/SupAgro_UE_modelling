@@ -1,7 +1,7 @@
 # ipython --gui=qt
 from cereals import build_shoot, parametric_leaf, leaf_azimuth, shoot_at_stage
 from display import display_mtg, build_scene, display_scene
-from stand import agronomic_plot, planter
+from stand import agronomic_plot
 
 # generation of a 3D plant from descritive parameters
 stem_radius=0.5
@@ -25,6 +25,6 @@ display_mtg(gg)
 
 # generate x,y position for a stand
 nplants, positions, domain, domain_area, unit = agronomic_plot(1, 1, 10,10,0.75)
-plants = [build_scene(g)]
-canopy = planter(plants, positions)
-diplay_scene(canopy)
+plants = [g for i in range(nplants)]
+canopy = build_scene(plants, positions)
+display_scene(canopy)

@@ -1,11 +1,9 @@
 from numpy import linspace, cos, sin
-from itertools import *
 from math import pi, sqrt
 from random import random,sample
 from numpy.random import vonmises
 import numpy as np
 from operator import itemgetter
-from openalea.plantgl.all import Translation, Vector3, AxisRotation, Transform4, Scene
 
 def regular(nb_plants, nb_rank, dx, dy, nx=None):
     
@@ -125,16 +123,6 @@ def concentric(nb_plants, distance_plant):
 def uniform(density, nb_plants):
     return []
 
-def planter(plants, distribution):
-    """
-    Returns a CanestraScene by positionning all elements.
-    """
-    new_scene = Scene()
-    def transfo(plant,pt):
-        r = AxisRotation((0,0,1), random()*pi).getMatrix()
-        return plant.transform2(Transform4(Translation(pt).getMatrix()*r))
-    l=[new_scene.add_plant(p) for p in map(transfo, cycle(iter(plants)),iter(distribution))]
-    return new_scene
 
 def sample_selection(points, gap_fraction):
     """

@@ -1,15 +1,21 @@
-from openalea.plantgl.all import Material, Color3, Shape, Scene, Viewer
+from openalea.plantgl.all import Material, Color3, Shape, Scene, Viewer, Translated, AxisRotated
+from itertools import cycle
 
-
-def build_scene(mtg,
-                          leaf_material=None,
-                          stem_material=None,
-                          soil_material=None,
-                          colors=None):
+def build_scene(mtg, position=(0, 0, 0),
+                     orientation=0,
+                     leaf_material=None,
+                     stem_material=None,
+                     soil_material=None,
+                     colors=None):
     """
     Returns a plantgl scene from an mtg.
     """
-
+    if not isinstance(mtg, list):
+        mtg = [mtg]
+    if not isinstance(position, list):
+        position=[position]
+    if not isinstance(orientation, list):
+        orientation=[orientation]
     if colors is None:
         if leaf_material is None:
             leaf_material = Material(Color3(0, 180, 0))
@@ -19,16 +25,14 @@ def build_scene(mtg,
             soil_material = Material(Color3(170, 85, 0))
             # colors = g.property('color')
 
-    geometries = mtg.property('geometry')
-    greeness = mtg.property('is_green')
-    labels = mtg.property('label')
+
     scene = Scene()
 
-    def geom2shape(vid, mesh, scene, colors):
+    def geom2shape(vid, mesh, scene, colors, position, orientation):
         shape = None
         if isinstance(mesh, list):
             for m in mesh:
-                geom2shape(vid, m, scene, colors)
+                geom2shape(vid, m, scene, colors, position, orientation)
             return
         if mesh is None:
             return
@@ -37,6 +41,7 @@ def build_scene(mtg,
             mesh = mesh.geometry
         label = labels.get(vid)
         is_green = greeness.get(vid)
+        mesh = Translated(position, AxisRotated((0,0,1),orientation, mesh))
         if colors:
             shape = Shape(mesh, Material(Color3(*colors.get(vid, [0, 0, 0]))))
         elif not greeness:
@@ -49,10 +54,14 @@ def build_scene(mtg,
         elif not is_green:
             shape = Shape(mesh, soil_material)
         shape.id = vid
+        
         scene.add(shape)
-
-    for vid, mesh in geometries.items():
-        geom2shape(vid, mesh, scene, colors)
+    for g, p, o in zip(cycle(mtg), position, cycle(orientation)):
+        geometries = g.property('geometry')
+        greeness = g.property('is_green')
+        labels = g.property('label')
+        for vid, mesh in geometries.items():
+            geom2shape(vid, mesh, scene, colors, p, o)
 
     return scene
 
