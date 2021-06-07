@@ -56,14 +56,15 @@ def build_scene(mtg, position=(0, 0, 0),
         shape.id = vid
         
         scene.add(shape)
-    for g, p, o in zip(cycle(mtg), position, cycle(orientation)):
+    nump = []
+    for i, (g, p, o) in enumerate(zip(cycle(mtg), position, cycle(orientation))):
         geometries = g.property('geometry')
         greeness = g.property('is_green')
         labels = g.property('label')
         for vid, mesh in geometries.items():
             geom2shape(vid, mesh, scene, colors, p, o)
-
-    return scene
+            nump.append(i)
+    return scene, nump
 
 
 def display_scene(scene):

@@ -27,6 +27,7 @@ def build_shoot(stem_radius, insertion_heights, leaf_lengths, leaf_areas, leaf_a
         leaf_shapes = [a_leaf for r in ranks]
     if leaf_azimuths is None:
         leaf_azimuths = leaf_azimuth(len(ranks))
+    leaf_azimuths[1:] = numpy.diff(leaf_azimuths)
     ff = [get_form_factor(leaf) for leaf in leaf_shapes]
     blades = blade_dimension(area=leaf_areas, length=leaf_lengths, ntop=ntop)
     stem = stem_dimension(h_ins=insertion_heights, d_internode=numpy.array(stem_radius) * 2, ntop=ntop)
