@@ -28,8 +28,10 @@ def build_scene(mtg, position=(0, 0, 0),
 
     scene = Scene()
 
-    def geom2shape(vid, mesh, scene, colors, position, orientation):
+    def geom2shape(vid, mesh, scene, colors, position, orientation, shape_id=None):
         shape = None
+        if shape_id is None:
+            shape_id = vid
         if isinstance(mesh, list):
             for m in mesh:
                 geom2shape(vid, m, scene, colors, position, orientation)
@@ -53,17 +55,22 @@ def build_scene(mtg, position=(0, 0, 0),
             shape = Shape(mesh, leaf_material)
         elif not is_green:
             shape = Shape(mesh, soil_material)
-        shape.id = vid
-        
+        shape.id = shape_id
+
         scene.add(shape)
+
     nump = []
+    count = 0
     for i, (g, p, o) in enumerate(zip(cycle(mtg), position, cycle(orientation))):
         geometries = g.property('geometry')
         greeness = g.property('is_green')
         labels = g.property('label')
+
         for vid, mesh in geometries.items():
-            geom2shape(vid, mesh, scene, colors, p, o)
+            geom2shape(vid, mesh, scene, colors, p, o, vid+count)
             nump.append(i)
+        count += len(g)
+
     return scene, nump
 
 

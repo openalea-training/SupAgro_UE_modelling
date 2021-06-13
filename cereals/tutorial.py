@@ -22,7 +22,7 @@ leaf_shapes = [a_leaf for l in leaf_lengths]
 # type ?leaf_azimuths for parameter siginification
 leaf_azimuths = leaf_azimuth(size=len(leaf_lengths), phyllotactic_angle=180, phyllotactic_deviation=15, plant_orientation=0, spiral=False)
 #
-shoot, g = build_shoot(stem_radius=stem_radius, insertion_heights=insertion_heights, leaf_lengths=leaf_lengths, leaf_areas=leaf_areas, 
+shoot, g = build_shoot(stem_radius=stem_radius, insertion_heights=insertion_heights, leaf_lengths=leaf_lengths, leaf_areas=leaf_areas,
                 leaf_shapes=leaf_shapes, leaf_azimuths=leaf_azimuths)
 scene, nump = build_scene(g)
 display_scene(scene)
@@ -53,7 +53,7 @@ leaf_azimuths = leaf_azimuth(size=len(leaf_lengths), phyllotactic_angle=600, phy
 # generate x,y position for a stand
 nplants, positions, domain, domain_area, unit = agronomic_plot(1, 1, 10,10,0.75)
 plants = [g for i in range(nplants)]
-scenescene, nump = build_scene(plants, positions)
+scene, nump = build_scene(plants, positions)
 display_scene(scene)
 
 # vertical light interception
@@ -71,5 +71,5 @@ cs.plot(ei)
 def score(res):
     return pandas.Series({'ei':(res.Ei*res.area).sum() / res.area.sum(),
                               'area': res.area.sum()})
-df['nump']=nump 
+df['nump']=nump
 df.groupby('nump').apply(score)
