@@ -11,7 +11,7 @@ If you have not yet installed conda on your computer, follow these instructions:
 
 [Conda Installation](https://conda.io/projects/conda/en/latest/user-guide/install/index.html). Follow instructions for Miniconda.
 
-[Conda Download](https://docs.conda.io/en/latest/miniconda.html). Use the Python 3.8 based installation.
+[Conda Download](https://docs.conda.io/en/latest/miniconda.html). 
 
 #### Windows, Linux, Mac
 
